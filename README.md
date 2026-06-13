@@ -20,7 +20,9 @@ The robot is made of two separate systems that communicate via NRF24L01 Radio mo
 - Touch Sensors (TTP223) modules (×2) — Kick and Mode Buttons: capacitive touch sensor modules that use edge detection, only triggers on the rising edge (LOW →      HIGH    transition), not while held. Kick button: Rising edge → sets kickActive flag in ControlData packet. Robot receives this → servo kicks → returns after      400ms. Mode     button: Rising edge → toggles eyesMode boolean. This switches both the robot's OLED display mode AND the transmitter's dashboard button            highlight.
 - NRF24L01 PA LNA Module: The second placement of the transceiver module.
 <img width="940" height="415" alt="Screenshot 2026-06-13 125251" src="https://github.com/user-attachments/assets/6948728c-7223-461d-b0d2-91c07961fce2" />
-# Errors/Problems Faced  
+
+# Errors/Problems Faced
+
 ### 1. Shared SPI Bus — TFT and NRF24 conflicting  
 The TFT screen and NRF24 module both use SPI. In theory, multiple SPI devices can share the same bus with separate CS pins. In practice I could never get 
 both working simultaneously on the Pi Pico — one would always interfere with the other.
