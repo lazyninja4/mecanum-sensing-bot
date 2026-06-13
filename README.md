@@ -28,7 +28,7 @@ The TFT screen and NRF24 module both use SPI. In theory, multiple SPI devices ca
 both working simultaneously on the Pi Pico — one would always interfere with the other.
 
 **Fix:** Switched to the ESP32 for the transmitter, which has two independent hardware SPI buses — HSPI for the TFT, VSPI for the NRF24. No sharing, no conflict.
----
+
 ### 2. One-way NRF Communication — couldn't send distance data back  
 I wanted to display the robot's live distance reading on the transmitter dashboard. This required the robot to send data back, but the NRF24 operates in either transmit or receive mode — never both simultaneously. The robot's NRF was already in receive mode listening for commands.
 
