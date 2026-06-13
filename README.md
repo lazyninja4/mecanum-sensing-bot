@@ -32,8 +32,7 @@ both working simultaneously on the Pi Pico — one would always interfere with t
 ### 2. One-way NRF Communication — couldn't send distance data back  
 I wanted to display the robot's live distance reading on the transmitter dashboard. This required the robot to send data back, but the NRF24 operates in either transmit or receive mode — never both simultaneously. The robot's NRF was already in receive mode listening for commands.
 
-**Fix:** No clean fix within the project timeline. The robot handles obstacle stopping autonomously (stops at <20cm) so the distance display on the controller wasn't critical. The proper solution would be using the NRF24's built-in ACK payload feature — attaching the distance reading to the acknowledgement packet sent back during normal TX/RX handshake — but this wasn't implemented in time.
-
+**Fix:** No clean fix within the project timeline. The robot handles obstacle stopping autonomously (stops at <20cm) so the distance display on the controller wasn't critical. The proper solution would be using the NRF24's built-in ACK payload feature — attaching the distance reading to the acknowledgement packet sent back during normal TX/RX handshake.
 # Code description
 
 ### Architecture
