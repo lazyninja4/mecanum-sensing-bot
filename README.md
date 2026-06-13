@@ -20,14 +20,14 @@ The robot is made of two separate systems that communicate via NRF24L01 Radio mo
 - Touch Sensors (TTP223) modules (×2) — Kick and Mode Buttons: capacitive touch sensor modules that use edge detection, only triggers on the rising edge (LOW →      HIGH    transition), not while held. Kick button: Rising edge → sets kickActive flag in ControlData packet. Robot receives this → servo kicks → returns after      400ms. Mode     button: Rising edge → toggles eyesMode boolean. This switches both the robot's OLED display mode AND the transmitter's dashboard button            highlight.
 - NRF24L01 PA LNA Module: The second placement of the transceiver module.
 <img width="940" height="415" alt="Screenshot 2026-06-13 125251" src="https://github.com/user-attachments/assets/6948728c-7223-461d-b0d2-91c07961fce2" />
-# Errors/Problems Faced
-### 1. Shared SPI Bus — TFT and NRF24 conflicting
+# Errors/Problems Faced  
+### 1. Shared SPI Bus — TFT and NRF24 conflicting  
 The TFT screen and NRF24 module both use SPI. In theory, multiple SPI devices can share the same bus with separate CS pins. In practice I could never get 
 both working simultaneously on the Pi Pico — one would always interfere with the other.
 
 **Fix:** Switched to the ESP32 for the transmitter, which has two independent hardware SPI buses — HSPI for the TFT, VSPI for the NRF24. No sharing, no conflict.
 ---
-### 2. One-way NRF Communication — couldn't send distance data back
+### 2. One-way NRF Communication — couldn't send distance data back  
 I wanted to display the robot's live distance reading on the transmitter dashboard. This required the robot to send data back, but the NRF24 operates in either transmit or receive mode — never both simultaneously. The robot's NRF was already in receive mode listening for commands.
 
 **Fix:** No clean fix within the project timeline. The robot handles obstacle stopping autonomously (stops at <20cm) so the distance display on the controller wasn't critical. The proper solution would be using the NRF24's built-in ACK payload feature — attaching the distance reading to the acknowledgement packet sent back during normal TX/RX handshake — but this wasn't implemented in time.
